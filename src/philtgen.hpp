@@ -154,7 +154,7 @@ class Game
     {
         return Filter([this, name](const Filter& f)
         {
-            if (data_.black_title_.empty())
+            if (data_.black_.empty())
             {
                 if (f.missing_info_rule_ == MissingInfo::fail)
                 {
