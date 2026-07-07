@@ -73,7 +73,7 @@ This section is a table of all settings, their function, and their default value
 
 | Setting (for a `Filter` object) | Function | Notes |
 | ------------------------------- | -------- | ----- |
-| `missing_info_rule(MissingInfo)` | If `MissingInfo::fail`, the game is invalid and filtered out. If `MissingInfo::pass`, missing header info is skipped, but the game is not invalidated unless it does not follow your filter | The setting is set to `MissingInfo::fail` by default |
+| `missing_info_rule(MissingInfo)` | If `MissingInfo::fail`, the game is invalid and filtered out if part of the header you activated a filter for is missing. For example, if you made a filter for results, if `Result` is missing from the PGN header, the entire game is discarded. If `MissingInfo::pass`, missing header info is skipped, but the game is not invalidated unless it does not follow your filter | The setting is set to `MissingInfo::fail` by default |
 
 ## Usage
 To use PhiltGeN:
