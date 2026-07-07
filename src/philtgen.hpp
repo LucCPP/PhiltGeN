@@ -15,16 +15,20 @@ struct PgnData
     std::string result_;
     std::string date_;
 
+    std::string termination_;
+    std::string event_;
+    std::string round_;
+
+    std::string eco_;
+    std::string opening_;
+    std::string time_control_;
+
     int year_{ -9'999'999 };
     int month_{ -9'999'999 };
     int day_{ -9'999'999 };
 
     int white_elo_{ -9'999'999 };
     int black_elo_{ -9'999'999 };
-
-    std::string eco_;
-    std::string opening_;
-    std::string time_control_;
 };
 
 enum class MissingInfo
@@ -183,6 +187,66 @@ class Game
             }
 
             return data_.black_title_ == title;
+        });
+    }
+
+    Filter termination(const std::string& end)
+    {
+        return Filter([this, end](const Filter& f)
+        {
+            if (data_.termination_.empty())
+            {
+                if (f.missing_info_rule_ == MissingInfo::fail)
+                {
+                    return false;
+                }
+                else if (f.missing_info_rule_ == MissingInfo::pass)
+                {
+                    return true;
+                }
+            }
+
+            return data_.termination_ == end;
+        });
+    }
+
+    Filter event(const std::string& name)
+    {
+        return Filter([this, name](const Filter& f)
+        {
+            if (data_.event_.empty())
+            {
+                if (f.missing_info_rule_ == MissingInfo::fail)
+                {
+                    return false;
+                }
+                else if (f.missing_info_rule_ == MissingInfo::pass)
+                {
+                    return true;
+                }
+            }
+
+            return data_.event_ == name;
+        });
+    }
+
+    Filter round(const std::string& name)
+    {
+        return Filter([this, name](const Filter& f)
+        {
+            if (data_.round_.empty())
+            {
+                if (f.missing_info_rule_ == MissingInfo::fail)
+                {
+                    return false;
+                }
+                else if (f.missing_info_rule_ == MissingInfo::pass)
+                {
+                    return true;
+                }
+            }
+
+            return data_.round_ == name;
         });
     }
 
@@ -614,6 +678,75 @@ class Game
                 if (data_.result_.ends_with("\"]"))
                 {
                     data_.result_.erase(data_.result_.size() - 2);
+                }
+            }
+            else if (word == "[Termination")
+            {
+                while (!word.ends_with(']') && stream >> word)
+                {
+                    data_.termination_ += word;
+                    data_.termination_ += " ";
+                }
+
+                if (!data_.termination_.empty()) 
+                {
+                    data_.termination_.pop_back(); 
+                }
+
+                if (data_.termination_.starts_with('\"'))
+                {
+                    data_.termination_.erase(0, 1);
+                }
+
+                if (data_.termination_.ends_with("\"]"))
+                {
+                    data_.termination_.erase(data_.termination_.size() - 2);
+                }
+            }
+            else if (word == "[Event")
+            {
+                while (!word.ends_with(']') && stream >> word)
+                {
+                    data_.event_ += word;
+                    data_.event_ += " ";
+                }
+
+                if (!data_.event_.empty()) 
+                {
+                    data_.event_.pop_back(); 
+                }
+
+                if (data_.event_.starts_with('\"'))
+                {
+                    data_.event_.erase(0, 1);
+                }
+
+                if (data_.event_.ends_with("\"]"))
+                {
+                    data_.event_.erase(data_.event_.size() - 2);
+                }
+            }
+            else if (word == "[Round")
+            {
+                while (!word.ends_with(']') && stream >> word)
+                {
+                    data_.round_ += word;
+                    data_.round_ += " ";
+                }
+
+                if (!data_.round_.empty()) 
+                {
+                    data_.round_.pop_back(); 
+                }
+
+                if (data_.round_.starts_with('\"'))
+                {
+                    data_.round_.erase(0, 1);
+                }
+
+                if (data_.round_.ends_with("\"]"))
+                {
+                    data_.round_.erase(data_.round_.size() - 2);
                 }
             }
             else if (word == "[UTCDate")
