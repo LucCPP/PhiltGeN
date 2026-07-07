@@ -59,13 +59,16 @@ This section is a table of all settings, their function, and their default value
 | `day(int)` | Sets the day the game must have taken place on | `UTCDate` must be in YYYY.MM.DD format |
 | `eco(std::string)` | Sets the ECO code the game must have | |
 | `opening(std::string)` | Sets the opening the game must have | Only the start of the opening string is compared to the passed string. For example, if the passed string is `French Defense`, games with the opening `French Defense` or `French Defense: Paulsen Variation` will not be filtered out |
+| `event(std::string)` | Sets the event the game must have taken place at | |
 | `max_black_elo(int)` | Sets the maximum ELO black can be | The maximum value is included in the range |
 | `max_white_elo(int)` | Sets the maximum ELO white can be | The maximum value is included in the range |
 | `min_black_elo(int)` | Sets the minimum ELO black can be | The minimum value is included in the range |
 | `min_white_elo(int)` | Sets the minimum ELO white can be | The minimum value is included in the range |
 | `month(int)` | Sets the month the game must have taken place in | `UTCDate` must be in YYYY.MM.DD format |
+| `round(std::string)` | Sets the round the game must have been played in | |
 | `result(std::string)` | Sets the outcome the game must have | Standard `Result`s are `1-0`, `0-1`, `1/2-1/2`, and `*` |
 | `site(std::string)` | Sets the website the game must have been played on | Only the start of the site string is compared to the passed string. For example, if the passed string is `https://lichess.org`, games with the site `https://lichess.org` or `https://lichess.org/xxxxxxxx` will not be filtered out |
+| `termination(std::string)` | Sets the termination the game must have | |
 | `time_control(std::string)` | Sets the time control the game must have been played in | `+0` is automatically removed from `TimeControl`s and inputted time control strings. For example, `600` and `600+0` as `TimeControl`s are treated the same |
 | `white(std::string)` | Sets the name that white must have | Multi-word names are supported (e.g., `John Doe`) |
 | `white_title(std::string)` | Sets the title that white must have | e.g., `GM`, `FM`, `IM`, etc. |
