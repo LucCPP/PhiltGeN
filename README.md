@@ -52,7 +52,7 @@ Please ensure that your input file contains correctly-formatted games so that th
 ## Settings
 This section is a table of all settings, their function, and their default value.
 
-| Setting (for a `Game` object) | Function | Notes | Header Used |
+| Setting (for a `Processor` object) | Function | Notes | Header Used |
 | ----------------------------- | -------- | ----- | ----------- |
 | `black(std::string)` | Sets the name black must have | Multi-word names are supported (e.g., `John Doe`) | `[Black "..."]` |
 | `black_title(std::string)` | Sets the title black must have | e.g., `GM`, `FM`, `IM`, etc. | `[BlackTitle "..."]` |
@@ -95,8 +95,8 @@ The following code reads an input file and writes to the output file only games 
 
 int main()
 {
-    // Create a game object
-    Philtgen::Game game;
+    // Create a processor object
+    Philtgen::Processor processor;
 
     std::string input_file{ "input.pgn" };
     std::string output_file{ "output.pgn" };
@@ -105,17 +105,17 @@ int main()
     std::string black_won{ "0-1" };
 
     // Conditions you want
-    Philtgen::Filter filter = game.min_white_elo(2400)
-                    && game.min_black_elo(2400)
-                    && (game.result(white_won) || game.result(black_won))
-                    && (game.opening("French Defense") || game.opening("Queen's Gambit Declined"))
-                    && !game.white_title("GM")
-                    && !game.black_title("GM");
+    Philtgen::Filter filter = processor.min_white_elo(2400)
+                    && processor.min_black_elo(2400)
+                    && (processor.result(white_won) || processor.result(black_won))
+                    && (processor.opening("French Defense") || processor.opening("Queen's Gambit Declined"))
+                    && !processor.white_title("GM")
+                    && !processor.black_title("GM");
 
     // Filter
     std::cout << "Processing..." << '\n';
 
-    game.write(input_file, output_file, filter);
+    processor.write(input_file, output_file, filter);
 
     std::cout << "Finished!" << '\n';
 

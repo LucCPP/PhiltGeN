@@ -6,6 +6,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <functional>
+#include <optional>
 
 namespace Philtgen
 {
@@ -27,12 +28,12 @@ namespace Philtgen
         std::string opening_;
         std::string time_control_;
 
-        int year_{ -9'999'999 };
-        int month_{ -9'999'999 };
-        int day_{ -9'999'999 };
+        std::optional<int> year_;
+        std::optional<int> month_;
+        std::optional<int> day_;
 
-        int white_elo_{ -9'999'999 };
-        int black_elo_{ -9'999'999 };
+        std::optional<int> white_elo_;
+        std::optional<int> black_elo_;
     };
 
     enum class MissingInfo
@@ -52,7 +53,7 @@ namespace Philtgen
             return f_1(data, *this);
         }
 
-        friend class Game;
+        friend class Processor;
 
         public:
         Filter(std::function<bool(const PgnData& data, const Filter& f)> f_2) : f_1(f_2) {}
@@ -87,11 +88,10 @@ namespace Philtgen
         }
     };
 
-    class Game
+    class Processor
     {
         private:
         PgnData data_;
-        static constexpr int any{ -9'999'999 };
 
         public:
         Filter site(const std::string& link) const
@@ -278,7 +278,7 @@ namespace Philtgen
         {
             return Filter([time](const PgnData& data, const Filter& f)
             {
-                if (data.year_ == any)
+                if (!data.year_.has_value())
                 {
                     if (f.missing_info_rule_ == MissingInfo::fail)
                     {
@@ -290,7 +290,7 @@ namespace Philtgen
                     }
                 }
 
-                return data.year_ == time;
+                return data.year_.value() == time;
             });
         }
 
@@ -298,7 +298,7 @@ namespace Philtgen
         {
             return Filter([time](const PgnData& data, const Filter& f)
             {
-                if (data.month_ == any)
+                if (!data.month_.has_value())
                 {
                     if (f.missing_info_rule_ == MissingInfo::fail)
                     {
@@ -310,7 +310,7 @@ namespace Philtgen
                     }
                 }
 
-                return data.month_ == time;
+                return data.month_.value() == time;
             });
         }
 
@@ -318,7 +318,7 @@ namespace Philtgen
         {
             return Filter([time](const PgnData& data, const Filter& f)
             {
-                if (data.day_ == any)
+                if (!data.day_.has_value())
                 {
                     if (f.missing_info_rule_ == MissingInfo::fail)
                     {
@@ -330,7 +330,7 @@ namespace Philtgen
                     }
                 }
 
-                return data.day_ == time;
+                return data.day_.value() == time;
             });
         }
 
@@ -338,7 +338,7 @@ namespace Philtgen
         {
             return Filter([elo](const PgnData& data, const Filter& f)
             {
-                if (data.white_elo_ == any)
+                if (!data.white_elo_.has_value())
                 {
                     if (f.missing_info_rule_ == MissingInfo::fail)
                     {
@@ -350,7 +350,7 @@ namespace Philtgen
                     }
                 }
 
-                return data.white_elo_ >= elo;
+                return data.white_elo_.value() >= elo;
             });
         }
 
@@ -358,7 +358,7 @@ namespace Philtgen
         {
             return Filter([elo](const PgnData& data, const Filter& f)
             {
-                if (data.white_elo_ == any)
+                if (!data.white_elo_.has_value())
                 {
                     if (f.missing_info_rule_ == MissingInfo::fail)
                     {
@@ -370,7 +370,7 @@ namespace Philtgen
                     }
                 }
 
-                return data.white_elo_ <= elo;
+                return data.white_elo_.value() <= elo;
             });
         }
 
@@ -378,7 +378,7 @@ namespace Philtgen
         {
             return Filter([elo](const PgnData& data, const Filter& f)
             {
-                if (data.black_elo_ == any)
+                if (!data.black_elo_.has_value())
                 {
                     if (f.missing_info_rule_ == MissingInfo::fail)
                     {
@@ -390,7 +390,7 @@ namespace Philtgen
                     }
                 }
 
-                return data.black_elo_ >= elo;
+                return data.black_elo_.value() >= elo;
             });
         }
 
@@ -398,7 +398,7 @@ namespace Philtgen
         {
             return Filter([elo](const PgnData& data, const Filter& f)
             {
-                if (data.black_elo_ == any)
+                if (!data.black_elo_.has_value())
                 {
                     if (f.missing_info_rule_ == MissingInfo::fail)
                     {
@@ -410,7 +410,7 @@ namespace Philtgen
                     }
                 }
 
-                return data.black_elo_ <= elo;
+                return data.black_elo_.value() <= elo;
             });
         }
 
@@ -791,7 +791,7 @@ namespace Philtgen
                     }
                     catch (const std::invalid_argument& e)
                     {
-                        data_.year_ = any;
+                        data_.year_ = std::nullopt;
                     }
                     
                     try
@@ -800,7 +800,7 @@ namespace Philtgen
                     }
                     catch(const std::exception& e)
                     {
-                        data_.month_ = any;
+                        data_.month_ = std::nullopt;
                     }
 
                     try
@@ -809,7 +809,7 @@ namespace Philtgen
                     }
                     catch(const std::exception& e)
                     {
-                        data_.day_ = any;
+                        data_.day_ = std::nullopt;
                     }
                 }
                 else if (word == "[WhiteElo")
@@ -832,7 +832,7 @@ namespace Philtgen
                     }
                     catch(const std::exception& e)
                     {
-                        data_.white_elo_ = any;
+                        data_.white_elo_ = std::nullopt;
                     }
                 }
                 else if (word == "[BlackElo")
@@ -855,7 +855,7 @@ namespace Philtgen
                     }
                     catch(const std::exception& e)
                     {
-                        data_.black_elo_ = any;
+                        data_.black_elo_ = std::nullopt;
                     }
                 }
                 else if (word == "[ECO")
