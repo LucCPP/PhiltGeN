@@ -104,7 +104,7 @@ int main()
     std::string white_won{ "1-0" };
     std::string black_won{ "0-1" };
 
-    // Conditions you want
+    // Create a filter object (make it equal the conditions you want)
     Philtgen::Filter filter = processor.min_white_elo(2400)
                     && processor.min_black_elo(2400)
                     && (processor.result(white_won) || processor.result(black_won))
@@ -112,9 +112,9 @@ int main()
                     && !processor.white_title("GM")
                     && !processor.black_title("GM");
 
-    // Filter
     std::cout << "Processing..." << '\n';
 
+    // Start the filtering
     processor.write(input_file, output_file, filter);
 
     std::cout << "Finished!" << '\n';
