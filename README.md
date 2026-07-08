@@ -116,8 +116,8 @@ int main()
     std::cout << "Processing..." << '\n';
 
     game.write(input_file, output_file, filter);
-    
-    std::couit << "Finished!" << '\n';
+
+    std::cout << "Finished!" << '\n';
 
     return 0;
 }
