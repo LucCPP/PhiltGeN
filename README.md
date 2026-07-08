@@ -10,7 +10,7 @@ PhiltGeN is a low-dependency, easy-to-use chess PGN filtering program.
 Here is an example of a PGN header compatible with PhiltGeN:
 ```
 [Event "Rated Blitz game"]
-[LichessURL "https://lichess.org/xxxxxxxx"]
+[Site "https://lichess.org/xxxxxxxx"]
 [Date "2020.09.01"]
 [Round "-"]
 [White "white"]
@@ -27,24 +27,24 @@ Here is an example of a PGN header compatible with PhiltGeN:
 [BlackRatingDiff "-2"]
 ```
 
-Notice how quotes surround the information, and each part is surrounded by brackets with no spaces. This is an example of a header that would not work:
+Notice how quotes surround the information, and each part is surrounded by brackets with no spaces. This is an example of a header that would not work well:
 ```
-[ Event "Rated Blitz game" ]
-[ LichessURL "https://lichess.org/xxxxxxxx" ]
-[ Date "2020.09.01" ]
-[ Round "-" ]
-[ White "white" ]
-[ Black "black" ]
-[ Result "1-0" ]
-[ BlackElo "2309" ]
-[ ECO "D52" ]
-[ Opening "Queen's Gambit Declined" ]
-[ TimeControl "180+0" ]
-[ UTCDate "2020.09.01" ]
-[ UTCTime "00:07:30" ]
-[ Termination "Time forfeit" ]
-[ WhiteRatingDiff "+2" ]
-[ BlackRatingDiff "-2" ]
+[ Event "Rated Blitz game ]
+[site "https://lichess.org/xxxxxxxx" ]
+[ date "20200901" ]
+[Round -" ]
+[ White "white"]
+[ black black" ]
+[ Result "1-0]
+[BlackElo "2309"]
+[ Eco "D52" ]
+[Opening Queen's Gambit Declined" ]
+[ Timecontrol "180+0"]
+[UTCDate "2020.09.01"]
+[ utcTime 00:07:30" ]
+[Termination Time forfeit ]
+[ WhiteRatingDiff +2" ]
+[BlackratingDiff "-2"]
 ```
 
 Please ensure that your input file contains correctly-formatted games.
