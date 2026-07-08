@@ -450,7 +450,7 @@ namespace Philtgen
                     }
                 }
 
-                return data.opening_ .starts_with(line);
+                return data.opening_.starts_with(line);
             });
         }
 
@@ -497,13 +497,13 @@ namespace Philtgen
             std::ifstream input(input_file);
             if (!input)
             {
-                std::cerr << "Could not open " << input_file << '\n';
+                throw std::runtime_error("Could not open the input file");
             }
 
             std::ofstream output(output_file);
             if (!output)
             {
-                std::cerr << "Could not open " << output_file << '\n';
+                throw std::runtime_error("Could not open the output file");
             }
 
             bool has_line{ false };
