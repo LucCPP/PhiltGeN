@@ -76,12 +76,12 @@ This section is a table of all settings, their function, and their default value
 
 | Setting (for a `Filter` object) | Function | Notes |
 | ------------------------------- | -------- | ----- |
-| `missing_info_rule(MissingInfo)` | If `MissingInfo::fail`, the game is invalid and filtered out if a tag you activated a filter for is missing. For example, if you made a filter for results, if `Result` is missing from the PGN header, the entire game is discarded. If `MissingInfo::pass`, missing header info is skipped, but the game is not invalidated unless it does not follow your filter | The setting is set to `MissingInfo::fail` by default |
+| `missing_info_rule(Philtgen::MissingInfo)` | If `Philtgen::MissingInfo::fail`, the game is invalid and filtered out if a tag you activated a filter for is missing. For example, if you made a filter for results, if `Result` is missing from the PGN header, the entire game is discarded. If `Philtgen::MissingInfo::pass`, missing header info is skipped, but the game is not invalidated unless it does not follow your filter | The setting is set to `fail` by default |
 
 ## Usage
 To use PhiltGeN:
 1. Download `philtgen.hpp` from `src` and drag and drop it into your workspace.
-2. Add `philtgen.hpp` to the includes in the files that need access to the filter.
+2. Add `#include "philtgen.hpp"` to the top of the files that need access to the filter.
 
 ### Supported Operators
 `&&`, `||`, and `!` are all supported to use for custom filters.
@@ -95,7 +95,7 @@ The following code reads an input file and writes to the output file only games 
 int main()
 {
     // Create a game object
-    Game game;
+    Philtgen::Game game;
 
     std::string input_file{ "input.pgn" };
     std::string output_file{ "output.pgn" };
@@ -104,7 +104,7 @@ int main()
     std::string black_won{ "0-1" };
 
     // Conditions you want
-    Filter filter = game.min_white_elo(2400)
+    Philtgen::Filter filter = game.min_white_elo(2400)
                     && game.min_black_elo(2400)
                     && (game.result(white_won) || game.result(black_won))
                     && (game.opening("French Defense") || game.opening("Queen's Gambit Declined"))
