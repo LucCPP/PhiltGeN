@@ -91,6 +91,7 @@ The following code reads an input file and writes to the output file only games 
 ```
 #include "philtgen.hpp"
 #include <string>
+#include <iostream>
 
 int main()
 {
@@ -112,7 +113,11 @@ int main()
                     && !game.black_title("GM");
 
     // Filter
+    std::cout << "Processing..." << '\n';
+
     game.write(input_file, output_file, filter);
+    
+    std::couit << "Finished!" << '\n';
 
     return 0;
 }
