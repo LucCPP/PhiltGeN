@@ -54,7 +54,7 @@ This section is a table of all settings, their function, and their default value
 
 | Setting (for a `Processor` object) | Function | Notes | Header Used |
 | ----------------------------- | -------- | ----- | ----------- |
-| `black(std::string)` | Sets the name black must have | Multi-word names are supported (e.g., `John Doe`) | `[Black "..."]` |
+| `black(std::string)` | Sets the name black must have | | `[Black "..."]` |
 | `black_title(std::string)` | Sets the title black must have | e.g., `GM`, `FM`, `IM`, etc. | `[BlackTitle "..."]` |
 | `day(int)` | Sets the day the game must have | `UTCDate` must be in YYYY.MM.DD format | `[UTCDate "YYYY.MM.DD"]` |
 | `eco(std::string)` | Sets the ECO code the game must have | | `[ECO "..."]` |
@@ -70,7 +70,7 @@ This section is a table of all settings, their function, and their default value
 | `site(std::string)` | Sets the site the game must have | Only the start of the site string is compared to the argument. For example, if the argument is `https://lichess.org`, games with the site `https://lichess.org` or `https://lichess.org/xxxxxxxx` will not be filtered out | `[Site "..."]` |
 | `termination(std::string)` | Sets the termination the game must have | | `[Termination "..."]` |
 | `time_control(std::string)` | Sets the time control the game must have | `+0` is automatically removed from `TimeControl`s and inputted time control strings. For example, `600` and `600+0` as `TimeControl`s are treated the same | `[TimeControl "..."]` |
-| `white(std::string)` | Sets the name that white must have | Multi-word names are supported (e.g., `John Doe`) | `[White "..."]` |
+| `white(std::string)` | Sets the name that white must have | | `[White "..."]` |
 | `white_title(std::string)` | Sets the title that white must have | e.g., `GM`, `FM`, `IM`, etc. | `[WhiteTitle "..."]` |
 | `year(int)` | Sets the year the game must have | `UTCDate` must be in YYYY.MM.DD format | `[UTCDate "YYYY.MM.DD"]` |
 
